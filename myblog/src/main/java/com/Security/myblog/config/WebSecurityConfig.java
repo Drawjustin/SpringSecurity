@@ -29,18 +29,22 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(authorize-> authorize
-                        .requestMatchers("/login","/signup","/user").permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login", "/signup", "/user").permitAll() // 인증 없이 접근 가능
                         .anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/login")
-                        .defaultSuccessUrl("/articles"))
-                .logout(logout -> logout.logoutSuccessUrl("/login")
-                        .invalidateHttpSession(true))
-                .csrf(AbstractHttpConfigurer :: disable)
+                .formLogin(form -> form
+                        .loginPage("/login") // 로그인 페이지 경로
+                        .defaultSuccessUrl("/articles") // 로그인 성공 시 리디렉션 경로
+                        .permitAll()) // 로그인 페이지는 항상 접근 가능
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login") // 로그아웃 후 이동할 경로
+                        .invalidateHttpSession(true)) // 세션 무효화
+                .csrf(AbstractHttpConfigurer::disable) // CSRF 보호 비활성화
                 .build();
     }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -56,13 +60,4 @@ public class WebSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-//    @Bean
-//    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
-//                                                       UserDetailService userDetailService) throws Exception{
-//        return http.getSharedObject(AuthenticationManagerBuilder.class)
-//                .userDetailsService(userService)
-//                .passwordEncoder(bCryptPasswordEncoder)
-//                .and().build();
-//
-//    }
 }
