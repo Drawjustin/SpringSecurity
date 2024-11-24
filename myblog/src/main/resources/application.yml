@@ -10,3 +10,6 @@ spring:
   jpa:
     defer-datasource-initialization: true
     show-sql: true
+jwt:
+  issuer: guswhd903@navre.com
+  secret_key: springboot-study
