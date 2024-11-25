@@ -12,8 +12,9 @@ public class AddArticleRequest {
     private String title;
     private String content;
 
-    public Article toEntity(){
+    public Article toEntity(String author){
         return Article.builder()
+                .author(author)
                 .title(title)
                 .content(content)
                 .build();

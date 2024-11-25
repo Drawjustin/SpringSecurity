@@ -10,6 +10,16 @@ spring:
   jpa:
     defer-datasource-initialization: true
     show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${oauth.google.client-id}
+            client-secret: ${oauth.google.client-secret}
+            scope:
+              - email
+              - profile
 jwt:
-  issuer: guswhd903@navre.com
+  issuer: guswhd903@naver.com
   secret_key: springboot-study

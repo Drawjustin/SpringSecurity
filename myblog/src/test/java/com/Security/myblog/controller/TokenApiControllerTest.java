@@ -41,7 +41,7 @@ public class TokenApiControllerTest {
     @Autowired
     RefreshTokenRepository refreshTokenRepository;
     
-    
+
     @BeforeEach
     public void mockUpSetUp(){
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -77,9 +77,5 @@ public class TokenApiControllerTest {
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.accessToken").isNotEmpty());
     }
-    
-    
-    
-    
 
 }
